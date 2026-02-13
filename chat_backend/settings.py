@@ -155,9 +155,7 @@ REST_FRAMEWORK = {
 }
 
 # CORS and CSRF settings
-CORS_ALLOWED_ORIGINS = [
-    "*"
-]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = [
     "content-type",
     "authorization",
@@ -166,5 +164,6 @@ CORS_ALLOW_HEADERS = [
 
 # CSRF trusted origins for ngrok (and any frontend you expose)
 CSRF_TRUSTED_ORIGINS = [
-    "*"
+    "https://chatapp-dono.onrender.com",
+    "http://localhost:8000"
 ]
