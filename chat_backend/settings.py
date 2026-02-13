@@ -154,7 +154,10 @@ REST_FRAMEWORK = {
 }
 
 # CORS and CSRF settings
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://chat-front-roan.vercel.app"
+]
+
 CORS_ALLOW_HEADERS = [
     "content-type",
     "authorization",
@@ -164,5 +167,6 @@ CORS_ALLOW_HEADERS = [
 # CSRF trusted origins for ngrok (and any frontend you expose)
 CSRF_TRUSTED_ORIGINS = [
     "https://chatapp-dono.onrender.com",
-    "http://localhost:8000"
+    "http://localhost:8000",
+    "https://chat-front-roan.vercel.app"
 ]
