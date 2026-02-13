@@ -124,6 +124,8 @@ STATIC_URL = "/static/"
 # collectstatic will copy files into STATIC_ROOT
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # During development, Django will also search this folder for static files (your Vite dist)
 # STATICFILES_DIRS = [
 #     BASE_DIR / "frontend_build" / "dist",  # should contain index.html, assets/, vite.svg
@@ -151,9 +153,7 @@ REST_FRAMEWORK = {
 
 # CORS and CSRF settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://glaucous-trina-frivolously.ngrok-free.dev",
+    "*"
 ]
 CORS_ALLOW_HEADERS = [
     "content-type",
@@ -163,6 +163,5 @@ CORS_ALLOW_HEADERS = [
 
 # CSRF trusted origins for ngrok (and any frontend you expose)
 CSRF_TRUSTED_ORIGINS = [
-    "https://glaucous-trina-frivolously.ngrok-free.dev",
-    "https://*.ngrok-free.app",
+    "*"
 ]
