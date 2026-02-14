@@ -67,7 +67,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # Make sure Django can find the built frontend index.html in frontend_build/dist
-        "DIRS": [BASE_DIR / "frontend_build" / "dist"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

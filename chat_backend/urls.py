@@ -30,8 +30,8 @@ urlpatterns = [
     path('api/',include('chat.urls')),
 ]
 
-urlpatterns += [
-    re_path(r'^(?!api/|admin/).*$',
-            TemplateView.as_view(template_name="index.html"),
-            name="spa"),
-]
+# urlpatterns += [
+#     re_path(r'^(?!api/|admin/).*$',
+#             TemplateView.as_view(template_name="index.html"),
+#             name="spa"),
+# ]
