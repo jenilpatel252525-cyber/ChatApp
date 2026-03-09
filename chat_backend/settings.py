@@ -154,9 +154,12 @@ REST_FRAMEWORK = {
 }
 
 # CORS and CSRF settings
-CORS_ALLOWED_ORIGINS = [
-    "https://chat-front-roan.vercel.app"
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://chat-front-roan.vercel.app",
+#     "http://localhost:5173/"
+# ]
+
+CORS_ALLOW_ALL_ORIGINS=True
 
 CORS_ALLOW_HEADERS = [
     "content-type",
@@ -168,5 +171,6 @@ CORS_ALLOW_HEADERS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://chatapp-dono.onrender.com",
     "http://localhost:8000",
-    "https://chat-front-roan.vercel.app"
+    "https://chat-front-roan.vercel.app",
+    "http://localhost:5173/"
 ]
