@@ -1,7 +1,7 @@
 # serializers.py
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Room, Message, UserProfile, UserEncryptionKey, RoomKeyForUser
+from .models import Room, Message, UserProfile
 
 User = get_user_model()
 
@@ -66,27 +66,11 @@ class RoomSerializer(serializers.ModelSerializer):
             "participants",
             "participant_ids",
             "created_at",
-            "key_version",
         ]
-        read_only_fields = ["created_at", "key_version"]
-
-
-# serializers.py
-from rest_framework import serializers
-from .models import Message, Room
-from .models import UserProfile
-
+        read_only_fields = ["created_at"]
 
 class MessageSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
-
-    # -------- GROUP --------
-    encrypted_text = serializers.CharField(required=False, allow_null=True)
-    key_version = serializers.IntegerField(required=False, allow_null=True)
-
-    # -------- 1-1 --------
-    encrypted_for_sender = serializers.CharField(required=False, allow_null=True)
-    encrypted_for_receiver = serializers.CharField(required=False, allow_null=True)
 
     class Meta:
         model = Message
@@ -94,67 +78,12 @@ class MessageSerializer(serializers.ModelSerializer):
             "id",
             "room",
             "user",
-            "encrypted_text",
-            "encrypted_for_sender",
-            "encrypted_for_receiver",
-            "key_version",
+            "text",
             "timestamp",
         ]
-        read_only_fields = ["id", "user", "timestamp"]
 
     def get_user(self, obj):
         return {
             "id": obj.user.id,
             "username": obj.user.user.username,
         }
-
-class UserEncryptionKeySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserEncryptionKey
-        fields = [
-            "id",
-            "public_key",
-            "encrypted_private_key_backup",
-            "created_at",
-            "updated_at",
-        ]
-        read_only_fields = ["created_at", "updated_at"]
-
-    def create(self, validated_data):
-        user = self.context["request"].user
-
-        defaults = {}
-        if "public_key" in validated_data:
-            defaults["public_key"] = validated_data["public_key"]
-
-        if "encrypted_private_key_backup" in validated_data:
-            defaults["encrypted_private_key_backup"] = validated_data[
-                "encrypted_private_key_backup"
-            ]
-
-        key_obj, _ = UserEncryptionKey.objects.update_or_create(
-            user=user,
-            defaults=defaults,
-        )
-        return key_obj
-
-
-class RoomKeyForUserSerializer(serializers.ModelSerializer):
-    room = serializers.PrimaryKeyRelatedField(
-        queryset=Room.objects.all()
-    )
-    user = serializers.PrimaryKeyRelatedField(
-        queryset=UserProfile.objects.all()
-    )
-
-    class Meta:
-        model = RoomKeyForUser
-        fields = [
-            "id",
-            "room",
-            "user",
-            "encrypted_room_key",
-            "version",
-            "created_at",
-        ]
-        read_only_fields = ["created_at"]
