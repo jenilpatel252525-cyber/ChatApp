@@ -277,6 +277,7 @@ class RoomViewSet(viewsets.ModelViewSet):
                         }
                     )
         room.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # ---------------------------
